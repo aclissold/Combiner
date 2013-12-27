@@ -11,8 +11,7 @@ import (
 )
 
 // Converts a collection of 32x32 .jpg sprites into a single png spritesheet.
-// The .jpg files must be contained in the same directory as this program
-// and named 0.jpg, 1.jpg, etc.
+// The .jpg files must be named 0.jpg, 1.jpg, etc.
 func main() {
 	setup()
 	read()
@@ -24,6 +23,13 @@ var dst *image.RGBA
 var square image.Rectangle
 
 func setup() {
+	if len(os.Args) != 2 {
+		fmt.Fprintln(os.Stderr, "Usage: combiner <dirname>")
+		os.Exit(1)
+	}
+	if err := os.Chdir(os.Args[1]); err != nil {
+		log.Fatal(err)
+	}
 	// Find the number of sprites and create the spritesheet
 	for i := 0; ; i++ {
 		filename := fmt.Sprintf("%d.jpg", i)
