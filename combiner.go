@@ -7,6 +7,7 @@ import (
 	"image/jpeg"
 	"image/png"
 	"log"
+	"math"
 	"os"
 )
 
@@ -43,7 +44,9 @@ func setup() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	dst = image.NewRGBA(image.Rect(0, 0, 32*cols, (32*sprites)/cols))
+	x1 := 32 * cols
+	y1 := int(32 * math.Ceil(float64(sprites)/float64(cols)))
+	dst = image.NewRGBA(image.Rect(0, 0, x1, y1))
 
 	// Create a square to use in specifying the size of the sprite to write
 	square = image.Rect(0, 0, 32, 32)
