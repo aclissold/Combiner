@@ -25,10 +25,15 @@ var square image.Rectangle
 
 func setup() {
 	// Find the number of sprites and create the spritesheet
-	fmt.Print("Enter the number of sprites to combine: ") // largest#.jpg + 1
-	_, err := fmt.Scanf("%d", &sprites)
+	for i := 0; ; i++ {
+		filename := fmt.Sprintf("%d.jpg", i)
+		if _, err := os.Stat(filename); os.IsNotExist(err) {
+			break
+		}
+		sprites = i + 1
+	}
 	fmt.Print("Enter the number of sprites per row: ")
-	_, err = fmt.Scanf("%d", &cols)
+	_, err := fmt.Scanf("%d", &cols)
 	if err != nil {
 		log.Fatal(err)
 	}
